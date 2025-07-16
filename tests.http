@@ -1,0 +1,14 @@
+@baseUrl = http://localhost:3333/api
+
+### Ping test
+GET {{baseUrl}}/ping
+
+### Create user
+POST {{baseUrl}}/users
+Content-Type: application/json
+
+{
+  "name": "John Doe",
+  "email": "johndoe@example.com",
+  "password":"123456"
+}

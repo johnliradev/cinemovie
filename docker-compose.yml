@@ -1,0 +1,31 @@
+version: "3.8"
+
+services:
+  db:
+    image: postgres:16-alpine
+    container_name: movie-reservation-db
+    environment:
+      POSTGRES_DB: movie_db
+      POSTGRES_USER: docker
+      POSTGRES_PASSWORD: docker
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+  server:
+    build: ./server
+    container_name: movie-reservation-server
+    ports:
+      - "3333:3333"
+    environment:
+      DATABASE_URL: postgres://docker:docker@db:5432/movie_db
+      PORT: 3333
+    volumes:
+      - ./server:/app
+      - /app/node_modules
+    depends_on:
+      - db
+    command: npm run dev
+volumes:
+  db_data:
