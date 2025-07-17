@@ -3,9 +3,9 @@ import { createUserSchema } from "../dto";
 import { createAppError } from "@/http/errors/appError";
 import bcrypt from "bcryptjs";
 import { usersRepository } from "../repository";
-import z, { email } from "zod";
+import z from "zod";
 
-export const createUser = async (
+export const registerUser = async (
   request: FastifyRequest,
   reply: FastifyReply
 ) => {
@@ -24,13 +24,14 @@ export const createUser = async (
   const saltRounds = 10;
   const hashPassword = await bcrypt.hash(parsedData.data.password, saltRounds);
   const userData = {
-    ...parsedData.data,
+    name: parsedData.data.name,
+    email: parsedData.data.email,
     hashPassword,
   };
 
   const user = await usersRepository.create(userData);
   reply.status(201).send({
-    message: "User successfuly created.",
+    message: "User successfully created.",
     user: { id: user.id, name: user.name, email: user.email },
   });
 };

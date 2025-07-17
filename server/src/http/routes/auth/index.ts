@@ -1,6 +1,6 @@
 import { registerUser } from "@/modules/users/use-cases/register";
 import { FastifyInstance } from "fastify";
 
-export const usersRouter = (app: FastifyInstance) => {
-  app.post("/", registerUser);
+export const authRouter = (app: FastifyInstance) => {
+  app.post("/register", registerUser);
 };
