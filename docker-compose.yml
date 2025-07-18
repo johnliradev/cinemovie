@@ -27,5 +27,15 @@ services:
     depends_on:
       - db
     command: npm run dev
+  client:
+    build: ./client
+    container_name: movie-reservation-client
+    ports:
+      - "5173:5173"
+    volumes:
+      - ./client:/app
+      - /app/node_modules
+    depends_on:
+      - server
 volumes:
   db_data:
