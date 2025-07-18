@@ -12,7 +12,7 @@ export const usersRepository = {
     return user;
   },
   getByEmail: async (email: string): Promise<User | undefined> => {
-    const rows = await queryDb("SELECT * FROM users WHERE email = $1", [email]);
+    const rows = await queryDb('SELECT id, name, email, hash_password as "hashPassword" FROM users WHERE email = $1', [email]);
     return rows[0];
   },
 };
